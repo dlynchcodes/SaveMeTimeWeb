@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <script type='text/javascript' src='https://localhost:5001/BingSource/'></script>
+    <script src='scripts/app.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.min.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        .ui.grid {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui grid">
+
+        <div class='five wide column'>
+            <div class='ui form basic segment'>
+                <div id='source-container' class='field'>
+                    <div class='ui input'>
+                        <input type='text' id='source' placeholder='From' />
+                    </div>
+                </div>
+                <div class='field' id='destination-container'>
+                    <div class='ui input'>
+                        <input type='text' id='destination' placeholder='To' />
+                    </div>
+                </div>
+                <div class='field'>
+                    <div class='ui input'>
+                        <input id='desired-commute' placeholder='Desired commute time in minutes' />
+                    </div>
+                </div>
+                <button class='ui button' type='button' onclick='WatchTraffic()'>Watch Traffic</button>
+                <div class="ui horizontal divider">
+                    Current Travel Time
+                </div>
+                <span id='travel-time'></span>
+            </div>
+        </div>
+
+        <div class='eleven wide column'>
+            <div id='myMap'>
+            </div>
+        </div>
+        
+    </div>
+</body>

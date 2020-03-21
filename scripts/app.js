@@ -4,12 +4,12 @@ var directionsManager
 
 function checkNotificationPromise() {
     try {
-      Notification.requestPermission().then();
-    } catch(e) {
-      return false;
+        Notification.requestPermission().then();
+    } catch (e) {
+        return false;
     }
     return true;
-  }
+}
 
 function formatParams(params) {
     return '?' + Object
@@ -28,7 +28,7 @@ function sourceSuggestion(suggestionResult) {
     document.getElementById('source').value = suggestionResult.formattedSuggestion
 }
 
-function destinationSuggestion(suggestionResult){
+function destinationSuggestion(suggestionResult) {
     map.entities.clear()
     map.setView({ bounds: suggestionResult.bestView })
     var pushpin = new Microsoft.Maps.Pushpin(suggestionResult.location)
@@ -63,7 +63,8 @@ function WatchTraffic() {
     let wp0 = document.getElementById('source').value
     let wp1 = document.getElementById('destination').value
     let desiredCommute = document.getElementById('desired-commute').value
-    if(!desiredCommute){
+
+    if (!desiredCommute) {
         alert('Desired Commute Time Required')
         return
     }
@@ -80,7 +81,12 @@ function WatchTraffic() {
     xhr.responseType = 'json'
     xhr.onload = function () {
         if (xhr.status != 200) {
-            alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+            $('body')
+                .toast({
+                    class: 'error',
+                    title: 'An error occured !',
+                    message: `${xhr.status}: ${xhr.statusText}`
+                })                
         } else {
             let minutes = Math.round(Number(xhr.response.resourceSets[0].resources[0].travelDurationTraffic) / 60)
             document.getElementById('travel-time').textContent = minutes + ' minutes'
@@ -109,7 +115,7 @@ function WatchTraffic() {
         // set the button to shown or hidden, depending on what the user answers
         if (Notification.permission === 'denied' || Notification.permission === 'default') {
             alert('Cannot display notifications')
-        } else {            
+        } else {
             if (window.Worker) {
                 let params = {
                     'wp0': wp0,
@@ -120,7 +126,7 @@ function WatchTraffic() {
                 const trafficWatcher = new Worker('js/trafficWatcher.js' + formatParams(params))
                 trafficWatcher.onmessage = function (data) {
                     document.getElementById('travel-time').textContent = data.data + ' minutes'
-                    if(Number(data.data) <= Number(desiredCommute)){                    
+                    if (Number(data.data) <= Number(desiredCommute)) {
                         let notificationBody = 'Your estimated travel time is now ' + data.data + ' minutes. It\'s time to leave!'
                         var notification = new Notification('Time to leave!', { body: notificationBody });
                     }
@@ -159,7 +165,7 @@ function GetDirections() {
     let params = {
         'wp0': wp0,
         'wp1': wp1,
-        'optmz': 'timeWithTraffic'        
+        'optmz': 'timeWithTraffic'
     }
 
     let xhr = new XMLHttpRequest()
@@ -168,7 +174,12 @@ function GetDirections() {
     xhr.responseType = 'json'
     xhr.onload = function () {
         if (xhr.status != 200) {
-            alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+            $('body')
+                .toast({
+                    class: 'error',
+                    title: 'An error occured !',
+                    message: `${xhr.status}: ${xhr.statusText}`
+                })  
         } else {
             let minutes = Math.round(Number(xhr.response.resourceSets[0].resources[0].travelDurationTraffic) / 60)
             document.getElementById('travel-time').textContent = minutes + ' minutes'

@@ -1,4 +1,4 @@
-var directionsUrl = 'https://localhost:5001/RestRoutesDriving'
+var directionsUrl = 'https://savemetime.xyz/RestRoutesDriving'
 var map
 var directionsManager
 

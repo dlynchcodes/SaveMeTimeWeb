@@ -1,14 +1,14 @@
 function formatParams(params) {
-    return "?" + Object
+    return '?' + Object
         .keys(params)
         .map(function (key) {
-            return key + "=" + params[key]
+            return key + '=' + params[key]
         })
-        .join("&")
+        .join('&')
 }
 
 var parameters = {}
-location.search.slice(1).split("&").forEach(function (key_value) { var kv = key_value.split("="); parameters[kv[0]] = kv[1]; })
+location.search.slice(1).split('&').forEach(function (key_value) { var kv = key_value.split('='); parameters[kv[0]] = kv[1]; })
 var searchParams = formatParams({
     'wp0': parameters.wp0,
     'wp1': parameters.wp1,

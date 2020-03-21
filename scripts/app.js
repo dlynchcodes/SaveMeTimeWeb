@@ -12,12 +12,12 @@ function checkNotificationPromise() {
   }
 
 function formatParams(params) {
-    return "?" + Object
+    return '?' + Object
         .keys(params)
         .map(function (key) {
-            return key + "=" + encodeURIComponent(params[key])
+            return key + '=' + encodeURIComponent(params[key])
         })
-        .join("&")
+        .join('&')
 }
 
 function sourceSuggestion(suggestionResult) {
@@ -134,7 +134,7 @@ function WatchTraffic() {
 
     // Let's check if the browser supports notifications
     if (!('Notification' in window)) {
-        console.log("This browser does not support notifications.");
+        console.log('This browser does not support notifications.');
     } else {
         if (checkNotificationPromise()) {
             Notification.requestPermission()

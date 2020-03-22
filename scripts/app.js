@@ -124,16 +124,23 @@ function WatchTraffic() {
                     'directionsUrl': directionsUrl
                 }
                 const trafficWatcher = new Worker('scripts/trafficWatcher.js' + formatParams(params))
-                trafficWatcher.onmessage = function (data) {
-                    document.getElementById('travel-time').textContent = data.data + ' minutes'
-                    if (Number(data.data) <= Number(desiredCommute)) {
-                        let notificationBody = 'Your estimated travel time is now ' + data.data + ' minutes. It\'s time to leave!'
-                        var notification = new Notification('Time to leave!', { body: notificationBody });
-                    }
 
+                trafficWatcher.onmessage = function (data) {
+                    document.getElementById('travel-time').textContent = `${data.data} minutes`
+                    if (Number(data.data) <= Number(desiredCommute)) {
+                        let notificationBody = 'Your estimated travel time is now' +
+                        ` ${data.data} minutes. It\'s time to leave!`
+                        new Notification('Time to leave!', { body: notificationBody })
+                        trafficWatcher.terminate()
+                    }
                 }
+
             } else {
-                alert('Your browser does not support workers.')
+                $('body')
+                .toast({
+                    class: 'error',
+                    message: 'Your browser does not support workers.'
+                })  
             }
         }
     }

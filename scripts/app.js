@@ -37,10 +37,34 @@ function destinationSuggestion(suggestionResult) {
 }
 
 function GetMap() {
-    map = new Microsoft.Maps.Map('#myMap')
+
+    // default is over LA
+    let lat = 34.033040
+    let long = -118.131021
+
+    function success(position) {
+        lat = position.coords.latitude;
+        long = position.coords.longitude;
+        map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(lat, long)
+        })
+    }
+
+    function error() {
+        map = new Microsoft.Maps.Map('#myMap', {
+            center: new Microsoft.Maps.Location(lat, long)
+        })
+    }
+
+    // get user's location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+
     Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
         directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map)
     })
+
     Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
         var options = {
             maxResults: 4,
@@ -48,7 +72,8 @@ function GetMap() {
         }
         var manager = new Microsoft.Maps.AutosuggestManager(options);
         manager.attachAutosuggest('#source', '#source-container', sourceSuggestion)
-    });
+    })
+
     Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
         var options = {
             maxResults: 4,
@@ -56,7 +81,7 @@ function GetMap() {
         }
         var manager = new Microsoft.Maps.AutosuggestManager(options);
         manager.attachAutosuggest('#destination', '#destination-container', destinationSuggestion)
-    });
+    })
 }
 
 function WatchTraffic() {
@@ -86,7 +111,7 @@ function WatchTraffic() {
                     class: 'error',
                     title: 'An error occured !',
                     message: `${xhr.status}: ${xhr.statusText}`
-                })                
+                })
         } else {
             let minutes = Math.round(Number(xhr.response.resourceSets[0].resources[0].travelDurationTraffic) / 60)
             document.getElementById('travel-time').textContent = minutes + ' minutes'
@@ -116,6 +141,7 @@ function WatchTraffic() {
         if (Notification.permission === 'denied' || Notification.permission === 'default') {
             alert('Cannot display notifications')
         } else {
+
             if (window.Worker) {
                 let params = {
                     'wp0': wp0,
@@ -129,7 +155,7 @@ function WatchTraffic() {
                     document.getElementById('travel-time').textContent = `${data.data} minutes`
                     if (Number(data.data) <= Number(desiredCommute)) {
                         let notificationBody = 'Your estimated travel time is now' +
-                        ` ${data.data} minutes. It\'s time to leave!`
+                            ` ${data.data} minutes. It\'s time to leave!`
                         new Notification('Time to leave!', { body: notificationBody })
                         trafficWatcher.terminate()
                     }
@@ -137,10 +163,10 @@ function WatchTraffic() {
 
             } else {
                 $('body')
-                .toast({
-                    class: 'error',
-                    message: 'Your browser does not support workers.'
-                })  
+                    .toast({
+                        class: 'error',
+                        message: 'Your browser does not support workers.'
+                    })
             }
         }
     }
@@ -186,7 +212,7 @@ function GetDirections() {
                     class: 'error',
                     title: 'An error occured !',
                     message: `${xhr.status}: ${xhr.statusText}`
-                })  
+                })
         } else {
             let minutes = Math.round(Number(xhr.response.resourceSets[0].resources[0].travelDurationTraffic) / 60)
             document.getElementById('travel-time').textContent = minutes + ' minutes'

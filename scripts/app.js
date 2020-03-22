@@ -123,7 +123,7 @@ function WatchTraffic() {
                     'desiredCommute': desiredCommute,
                     'directionsUrl': directionsUrl
                 }
-                const trafficWatcher = new Worker('js/trafficWatcher.js' + formatParams(params))
+                const trafficWatcher = new Worker('scripts/trafficWatcher.js' + formatParams(params))
                 trafficWatcher.onmessage = function (data) {
                     document.getElementById('travel-time').textContent = data.data + ' minutes'
                     if (Number(data.data) <= Number(desiredCommute)) {

@@ -11,7 +11,7 @@
 
         gtag('config', 'UA-161549689-1');
     </script>
-<!--#endregion-->
+    <!--#endregion-->
 
     <meta charset="utf-8" />
     <title>Save Me Time</title>
@@ -22,7 +22,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.min.js"></script>
     <!--#endregion-->
-    
+
     <!--#region styles -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.3/dist/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="styles/site.css">
@@ -50,9 +50,28 @@
 </head>
 
 <body>
-    <div class="ui grid">
+    <div class='ui grid container'>
 
-        <div class='five wide column'>
+        <div class='seven wide column'>
+            <div class='ui basic segment'>
+                <div class="ui huge header">
+                    <img src="/images/savemetimeofficial.png" class="ui image">
+                    Save Me Time
+                </div>
+                <div class='ui small header'>
+                    <p>
+                        Get notified when traffic is light!
+                    </p>
+                </div>
+            </div>
+            <div class='ui basic segment'>
+                <p>
+                    Don't care about what traffic is now, and just want to be notified when rush hour is over? 
+                    <br /><br />
+                    Save time by getting notified when your commute shortens to your desired time.
+                    <br /><br />                    
+                </p>
+            </div>
             <div class='ui form basic segment'>
                 <div id='source-container' class='field'>
                     <div class='ui input'>
@@ -69,15 +88,17 @@
                         <input id='desired-commute' placeholder='Desired commute time in minutes' />
                     </div>
                 </div>
-                <button class='ui button' type='button' onclick='WatchTraffic()'>Watch Traffic</button>
-                <div class="ui horizontal divider">
-                    Current Travel Time
+                <div class='field'>
+                    <button class='ui button' type='button' onclick='WatchTraffic()'>Watch Traffic</button>
                 </div>
-                <span id='travel-time'></span>
+                <div class='field'>
+                    <span><strong>Current Travel Time:&nbsp;</strong></span>
+                    <span id='travel-time'></span>
+                </div>
             </div>
         </div>
 
-        <div class='eleven wide column'>
+        <div class='nine wide column'>
             <div id='myMap'>
             </div>
         </div>

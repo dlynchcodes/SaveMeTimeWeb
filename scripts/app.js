@@ -122,7 +122,7 @@ function WatchTraffic() {
                 })
         } else {
             let minutes = Math.round(Number(xhr.response.resourceSets[0].resources[0].travelDurationTraffic) / 60)
-            document.getElementById('travel-time').textContent = minutes + ' minutes'
+            document.getElementById('travel-time').innerHTML = `<strong>Current Travel Time:&nbsp;</strong> ${minutes} minutes`
         }
     }
 

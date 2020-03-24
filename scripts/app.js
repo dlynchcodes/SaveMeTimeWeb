@@ -42,18 +42,46 @@ function GetMap() {
     let lat = 34.033040
     let long = -118.131021
 
+    function instantiateMapsComponents(){
+        Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+            directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map)
+        })
+    
+        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+            var options = {
+                maxResults: 4,
+                map: map
+            }
+            var manager = new Microsoft.Maps.AutosuggestManager(options);
+            manager.attachAutosuggest('#source', '#source-container', sourceSuggestion)
+        })
+    
+        Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+            var options = {
+                maxResults: 4,
+                map: map
+            }
+            var manager = new Microsoft.Maps.AutosuggestManager(options);
+            manager.attachAutosuggest('#destination', '#destination-container', destinationSuggestion)
+        })
+    }
+
     function success(position) {
         lat = position.coords.latitude;
         long = position.coords.longitude;
         map = new Microsoft.Maps.Map('#myMap', {
             center: new Microsoft.Maps.Location(lat, long)
         })
+
+        instantiateMapsComponents()
     }
 
     function error() {
         map = new Microsoft.Maps.Map('#myMap', {
             center: new Microsoft.Maps.Location(lat, long)
         })
+
+        instantiateMapsComponents()
     }
 
     // get user's location
@@ -61,27 +89,7 @@ function GetMap() {
         navigator.geolocation.getCurrentPosition(success, error);
     }
 
-    Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
-        directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map)
-    })
 
-    Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
-        var options = {
-            maxResults: 4,
-            map: map
-        }
-        var manager = new Microsoft.Maps.AutosuggestManager(options);
-        manager.attachAutosuggest('#source', '#source-container', sourceSuggestion)
-    })
-
-    Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
-        var options = {
-            maxResults: 4,
-            map: map
-        }
-        var manager = new Microsoft.Maps.AutosuggestManager(options);
-        manager.attachAutosuggest('#destination', '#destination-container', destinationSuggestion)
-    })
 }
 
 function WatchTraffic() {

@@ -164,7 +164,11 @@ function WatchTraffic() {
                     if (Number(data.data) <= Number(desiredCommute)) {
                         let notificationBody = 'Your estimated travel time is now' +
                             ` ${data.data} minutes. It\'s time to leave!`
-                        new Notification('Time to leave!', { body: notificationBody })
+                        new Notification('Time to leave!', 
+                        {
+                            icon: 'images/favicon-96x96.png',
+                            body: notificationBody 
+                        })
                         trafficWatcher.terminate()
                     }
                 }

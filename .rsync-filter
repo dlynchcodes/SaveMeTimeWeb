@@ -1,6 +1,0 @@
-.gitignore
-.git
-.rsync-filter
-deploy.sh
-server.pem
-simple-https-server.py
